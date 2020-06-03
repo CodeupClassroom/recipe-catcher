@@ -1,14 +1,24 @@
 package com.rc;
 
+import com.rc.recipes.Ingredient;
+import com.rc.recipes.Recipe;
 import com.rc.users.Guest;
 import com.rc.users.Registered;
 import com.rc.users.User;
 import com.rc.util.Input;
 
+import java.util.ArrayList;
+
 public class App {
+
+    static ArrayList<Ingredient> sampleIngredients;
+    static ArrayList<Recipe> recipes = new ArrayList<>();
+
     public static void main(String[] args) {
 //        User noAbstract = new User();
-        User fer = new Registered("Fernando", "Mendoza", "fer@mail.com", "fer", "pass");
+        Registered fer = new Registered("Fernando", "Mendoza", "fer@mail.com", "fer", "pass");
+        buildDummyData();
+
 
         Input input = new Input();
 
@@ -31,7 +41,29 @@ public class App {
                 currentUser = new Registered(firstName, lastName, email, username, password);
                 break;
             case 2:
-                System.out.println("Login system is not implemented yet.");
+                System.out.println("Logged in");
+
+                do{
+                    recipeMenu();
+                    switch(input.getInt(1,2)){
+                        case 1:
+                            // view recipes
+                            for (Recipe recipe: recipes) {
+                                recipe.display();
+                            }
+                            break;
+                        case 2:
+                            String recipeName = input.getString("What's the name of the recipe");
+                            System.out.println("What's the time of the recipe");
+                            double recipeTime = input.getDouble();
+                            String recipeInstructions = input.getString("What are the instructions of the recipe");
+                            String timeUnit = input.getString("What is the time unit of the recipe");
+                            Recipe newRecipe = new Recipe(recipeName, recipeTime, recipeInstructions, timeUnit,  sampleIngredients, fer);
+                            recipes.add(newRecipe);
+                            break;
+                    }
+                    System.out.println("Continue?");
+                }while(input.yesNo());
 
                 break;
             case 3:
@@ -42,4 +74,22 @@ public class App {
 
         System.out.println("currentUser = " + currentUser);
     }
+
+    public static void recipeMenu(){
+        System.out.println("What do you want to do?");
+        System.out.println("1. View a recipe");
+        System.out.println("2. Create a recipe");
+    }
+
+    public static void buildDummyData(){
+        sampleIngredients = new ArrayList<>();
+        sampleIngredients.add(new Ingredient("Eggs", 3, "egg"));
+        sampleIngredients.add(new Ingredient("Cheese", 0.5, "kg"));
+
+        Registered douglas = new Registered("Douglas", "hirsh", "d@d.com", "d", "pass");
+
+        //String name, double time, String instructions, String timeUnit, ArrayList<Ingredient> ingredients, Registered owner
+        recipes.add(new Recipe("Chicken soup", 50, "cook", "mins", sampleIngredients, douglas));
+    }
+
 }

@@ -69,4 +69,16 @@ public class Recipe {
     public void setInstructions(String instructions) {
         this.instructions = instructions;
     }
+
+    public void display(){
+        System.out.println("--------------");
+        System.out.println("name = " + this.name);
+        System.out.println("time = " + this.time);
+        System.out.println("instructions = " + this.instructions);
+        System.out.println("timeUnit = " + this.timeUnit);
+        for (Ingredient ingredient: this.ingredients) {
+            System.out.println("ingredient = " + ingredient.getName());
+        }
+        System.out.println("owner = " + this.owner.getUsername());
+    }
 }
