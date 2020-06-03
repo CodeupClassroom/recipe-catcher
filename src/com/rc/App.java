@@ -13,10 +13,12 @@ public class App {
 
     static ArrayList<Ingredient> sampleIngredients;
     static ArrayList<Recipe> recipes = new ArrayList<>();
+    static ArrayList<Registered> users = new ArrayList<>();
 
     public static void main(String[] args) {
 //        User noAbstract = new User();
         Registered fer = new Registered("Fernando", "Mendoza", "fer@mail.com", "fer", "pass");
+        users.add(fer);
         buildDummyData();
 
 
@@ -40,7 +42,11 @@ public class App {
                 String password = input.getString("Password: ");
                 currentUser = new Registered(firstName, lastName, email, username, password);
                 break;
-            case 2:
+            case 2: // Registered user login
+                do {
+                    currentUser = login(input.getString("username: "), input.getString("password: "));
+                } while (currentUser == null);
+
                 System.out.println("Logged in");
 
                 do{
@@ -81,6 +87,15 @@ public class App {
         System.out.println("currentUser = " + currentUser);
     }
 
+    private static Registered login(String username, String password) {
+        for (Registered user : users) {
+            if(user.login(username, password)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
     private static void viewRecipes() {
         for (Recipe recipe: recipes) {
             recipe.display();
@@ -101,6 +116,7 @@ public class App {
         sampleIngredients.add(new Ingredient("Cheese", 0.5, "kg"));
 
         Registered douglas = new Registered("Douglas", "hirsh", "d@d.com", "d", "pass");
+        users.add(douglas);
 
         //String name, double time, String instructions, String timeUnit, ArrayList<Ingredient> ingredients, Registered owner
         recipes.add(new Recipe("Chicken soup", 50, "cook", "mins", sampleIngredients, douglas));
