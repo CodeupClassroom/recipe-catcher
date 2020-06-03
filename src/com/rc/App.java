@@ -7,6 +7,7 @@ import com.rc.util.Input;
 
 public class App {
     public static void main(String[] args) {
+//        User noAbstract = new User();
         User fer = new Registered("Fernando", "Mendoza", "fer@mail.com", "fer", "pass");
 
         Input input = new Input();
@@ -31,6 +32,7 @@ public class App {
                 break;
             case 2:
                 System.out.println("Login system is not implemented yet.");
+
                 break;
             case 3:
                 System.out.println("Proceeding as guest.");
