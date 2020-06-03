@@ -48,9 +48,7 @@ public class App {
                     switch(input.getInt(1,2)){
                         case 1:
                             // view recipes
-                            for (Recipe recipe: recipes) {
-                                recipe.display();
-                            }
+                            viewRecipes();
                             break;
                         case 2:
                             String recipeName = input.getString("What's the name of the recipe");
@@ -69,11 +67,24 @@ public class App {
             case 3:
                 System.out.println("Proceeding as guest.");
                 currentUser = new Guest(input.getString("First Name: "), input.getString("Last Name: "), input.getString("Email: "));
-                recipeMenu(currentUser);
+
+                do {
+                    recipeMenu(currentUser);
+                    switch (input.getInt(1,1)){
+                        case 1:
+                                viewRecipes();
+                    }
+                } while(input.yesNo());
                 break;
         }
 
         System.out.println("currentUser = " + currentUser);
+    }
+
+    private static void viewRecipes() {
+        for (Recipe recipe: recipes) {
+            recipe.display();
+        }
     }
 
     public static void recipeMenu(User user){
