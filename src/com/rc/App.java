@@ -44,7 +44,7 @@ public class App {
                 System.out.println("Logged in");
 
                 do{
-                    recipeMenu();
+                    recipeMenu(fer);
                     switch(input.getInt(1,2)){
                         case 1:
                             // view recipes
@@ -69,16 +69,19 @@ public class App {
             case 3:
                 System.out.println("Proceeding as guest.");
                 currentUser = new Guest(input.getString("First Name: "), input.getString("Last Name: "), input.getString("Email: "));
+                recipeMenu(currentUser);
                 break;
         }
 
         System.out.println("currentUser = " + currentUser);
     }
 
-    public static void recipeMenu(){
+    public static void recipeMenu(User user){
         System.out.println("What do you want to do?");
         System.out.println("1. View a recipe");
-        System.out.println("2. Create a recipe");
+        if(user instanceof Registered) {
+            System.out.println("2. Create a recipe");
+        }
     }
 
     public static void buildDummyData(){
